@@ -3,6 +3,8 @@ const Joi = require('joi');
 const mongoose = require('mongoose');
 const express = require('express');
 const users = require('./routes/users');
+const matches = require('./modules/matches');
+const leauges = require('./routes/leagues');
 const app = express();
 
 
@@ -19,6 +21,11 @@ app.get('/', (req, res) => {
 app.get('/api/lobbies', (req, res) => {
     res.send('lobbies');
 });
+
+
+app.use('/api/leagues', leauges);
+
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
