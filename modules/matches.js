@@ -13,9 +13,6 @@ app.use(cors());
 // let url = {
 //   method: 'GET',
 //   url: `https://api-football-v1.p.rapidapi.com/v2/fixtures/league/${leagueId}/${date}`,
-//   qs: {
-//     timezone: 'Europe%2FLondon'
-//   },
 //   headers: {
 //     'x-rapidapi-host': 'api-football-v1.p.rapidapi.com',
 //     'x-rapidapi-key': '0f5b02dfe7msh6c81fec732f7b8ep1803e9jsnd99f16bb485a'
