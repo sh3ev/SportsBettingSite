@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Lobby = require('../models/Lobby');
+const Lobby = require('../models/lobby');
 
 
 //LIST ALL LOBBIES
@@ -61,5 +61,23 @@ router.patch('/:lobbyId', async(req, res) => {
 			res.send(err);
 		})
 });
+//Add user to Lobby
+
+router.put('/:lobbyName/add', async(req,res) => {
+
+const updatedLobby= await Lobby.find({name: req.params.lobbyName});
+
+updatedLobby[0].users.push(req.body.userID);
+
+updatedLobby[0].save()
+		.then(data => {
+			res.send(data);
+		})
+		.catch(err => {
+			res.send(err);
+		})
+
+
+})
 
 module.exports = router;

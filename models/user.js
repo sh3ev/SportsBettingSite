@@ -1,5 +1,7 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
+const {usersBetSchema} = require('usersBet.js');
+
 
 const User = mongoose.model('User', new mongoose.Schema({
     name: {
@@ -25,7 +27,8 @@ const User = mongoose.model('User', new mongoose.Schema({
       lobbies: {
         type: [mongoose.Schema.Types.ObjectId],
         ref: 'Lobby'
-      }
+      },
+      usersBets: [usersBetSchema]
   }));
   function validateUser(user) {
     const schema = {
