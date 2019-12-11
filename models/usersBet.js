@@ -15,5 +15,5 @@ const usersBetSchema = new mongoose.Schema({
 
 const UsersBet = mongoose.model('UsersBet', usersBetSchema);
 
-exports.UsersBet;
-exports.usersBetSchema;
+exports.UsersBet=UsersBet;
+exports.usersBetSchema=usersBetSchema;

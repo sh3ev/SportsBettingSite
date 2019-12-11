@@ -1,6 +1,6 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
-const {usersBetSchema} = require('usersBet.js');
+const {usersBetSchema} = require('./usersBet');
 
 
 const User = mongoose.model('User', new mongoose.Schema({

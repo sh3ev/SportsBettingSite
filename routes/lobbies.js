@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Lobby = require('../models/lobby');
-
+const {Fixture} = require('../models/fixture');
 
 //LIST ALL LOBBIES
 router.get('/', async(req, res) => {

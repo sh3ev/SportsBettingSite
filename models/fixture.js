@@ -9,5 +9,5 @@ const fixtureSchema = new mongoose.Schema({
 });
 
 const Fixture=mongoose.model('Fixture', fixtureSchema);
-exports.Fixture;
-exports.fixtureSchema;
+exports.Fixture=Fixture;
+exports.fixtureSchema=fixtureSchema;
