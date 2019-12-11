@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const Lobby = require('../models/Lobby');
+const Lobby = require('../models/lobby');
+const League = require('../models/league');
+const request = require('request');
+const mongoose = require('mongoose');
 
 
 //LIST ALL LOBBIES
-router.get('/', async(req, res) => {
+router.get('/', async (req, res) => {
 	const lobbies = await Lobby.find();
 	res.send(lobbies);
 });
@@ -25,7 +28,7 @@ router.post('/', (req, res) => {
 });
 
 //LIST SPECIFIC LOBBY
-router.get('/:lobbyId', async(req, res) => {
+router.get('/:lobbyId', async (req, res) => {
 	const lobby = await Lobby.findById(req.params.lobbyId);
 	res.send(lobby)
 		.then()
@@ -35,7 +38,7 @@ router.get('/:lobbyId', async(req, res) => {
 });
 
 //DELETE LOBBY
-router.delete('/:lobbyId', async(req, res) => {
+router.delete('/:lobbyId', async (req, res) => {
 	const removedLobby = await Lobby.remove({
 		_id: req.params.lobbyId
 	});
@@ -47,7 +50,7 @@ router.delete('/:lobbyId', async(req, res) => {
 });
 
 //UPDATE LOBBY
-router.patch('/:lobbyId', async(req, res) => {
+router.patch('/:lobbyId', async (req, res) => {
 	const updatedLobby = await Lobby.updateOne({
 		_id: req.params.lobbyId
 	}, {
@@ -61,5 +64,35 @@ router.patch('/:lobbyId', async(req, res) => {
 			res.send(err);
 		})
 });
+
+
+//ADD MATCH TO LOBBY In progress
+// na razie pobiera dane po podaniu ligi i daty
+// problem z polem fixtures w modelu lobby
+router.post('/:lobbyName/:leagueName/:date', async (req, res) => {
+	const leagues = await League.find({
+		name: req.params.leagueName
+	}, {league_id: 1, _id:0});
+	var League_id = leagues.map(function(leagues){ return leagues.league_id });
+	const date = req.params.date;
+
+	let url = {
+		method: 'GET',
+		url: `https://api-football-v1.p.rapidapi.com/v2/fixtures/league/${League_id}/${date}`,
+		headers: {
+		  'x-rapidapi-host': 'api-football-v1.p.rapidapi.com',
+		  'x-rapidapi-key': '0f5b02dfe7msh6c81fec732f7b8ep1803e9jsnd99f16bb485a'
+		}
+	  };
+	  request(url, function (error, response, body) {
+		if (!error && response.statusCode == 200) {
+		  let info = JSON.parse(body)
+		  res.send(info);
+		}
+	  })
+
+});
+
+
 
 module.exports = router;

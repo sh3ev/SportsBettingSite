@@ -5,11 +5,13 @@ const router = express.Router();
 const League = require('../models/leagues');
 const mongoose = require('mongoose');
 
+// Get all leagues
 router.get('/', async(req, res) => {
 	const leagues = await League.find();
 	res.send(leagues);
 });
 
+// Add new league
 router.post('/', (req, res) => {
 	const league = new League({
         _id: new mongoose.Types.ObjectId(),
