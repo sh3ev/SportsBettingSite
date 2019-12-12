@@ -4,10 +4,10 @@ const fixtureSchema = new mongoose.Schema({
     homeTeamName: String,
     awayTeamName: String,
     score: String,
-    date: Date,
-    status: Boolean
+    date: String,
+    status: String
 });
 
 const Fixture=mongoose.model('Fixture', fixtureSchema);
-exports.Fixture=Fixture;
-exports.fixtureSchema=fixtureSchema;
+module.exports.Fixture=Fixture;
+module.exports.fixtureSchema=fixtureSchema;
