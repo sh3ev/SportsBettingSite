@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const leaugeSchema = mongoose.Schema({
+const leagueSchema = new mongoose.Schema({
 	_id: {
 		type: mongoose.Schema.Types.ObjectId,
 		required: true
@@ -18,4 +18,4 @@ const leaugeSchema = mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('Leauge', leaugeSchema);
+module.exports = mongoose.model('League', leagueSchema);

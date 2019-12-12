@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const League = require('../models/leagues');
+const League = require('../models/league');
 const mongoose = require('mongoose');
 
 // Get all leagues
