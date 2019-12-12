@@ -15,7 +15,10 @@ const LobbySchema = new mongoose.Schema({
 		type: [mongoose.Schema.Types.ObjectId],
         ref: 'User'
 	},
-	fixtures: [fixtureSchema]
+	fixtures: {
+		type: [fixtureSchema],
+		default: []
+	}
 	
 });
 

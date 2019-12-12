@@ -32,5 +32,5 @@ mongoose.connect('mongodb+srv://jedrzej:1234@cluster0-pwyj2.mongodb.net/test?ret
 	.catch(err => console.error('Could not connect to MongoDB...'));
 
 // START LISTETING TO THE SERVER
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
