@@ -1,3 +1,4 @@
+const config = require('config');
 const MongoClient = require('mongodb');
 const Joi = require('joi');
 const mongoose = require('mongoose');
@@ -8,7 +9,10 @@ const leauges = require('./routes/leagues');
 const lobbies = require('./routes/lobbies');
 const app = express();
 
-
+if(!config.get('jwtPrivateKey')){
+	console.error('FATAL ERROR: jwtPrivateKey is not defined.');
+	process.exit(1); //wyście z procesu w przypadk błędu, 0-sukces
+}
 app.use(express.urlencoded({
 	extended: true
 }));
@@ -29,7 +33,6 @@ mongoose.connect('mongodb+srv://przemek:1234@cluster0-pwyj2.mongodb.net/test?ret
 	})
 	.then(() => console.log('Connected to MongoDB...'))
 	.catch(err => console.error('Could not connect to MongoDB...'));
-
 // START LISTETING TO THE SERVER
 const port = process.env.PORT || 3001;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
