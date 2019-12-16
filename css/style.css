@@ -1,0 +1,35 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.formbox {
+    display: grid;
+    margin: 100px auto;
+    padding: 50px;
+    width: 300px;
+    border: 1px black solid;
+
+}
+
+.buttons {
+    display: grid;
+    margin-top: 100px;
+    justify-items: center;
+}
+
+.buttons li {
+    display: inline-block;
+    border: 1px black solid;
+    border-radius: 100px;
+    width: 220px;
+    padding: 50px;
+    background-color: #aaa;
+}
+
+.buttons li a {
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+}
