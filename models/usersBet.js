@@ -8,9 +8,10 @@ const usersBetSchema = new mongoose.Schema({
       ref: 'Lobby'
     },
     fixtureID:String,
-    score: String
+    homeTeamScore: Number,
+    awayTeamScore: Number
     
-    })
+    });
 
 
 const UsersBet = mongoose.model('UsersBet', usersBetSchema);
