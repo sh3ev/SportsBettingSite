@@ -37,6 +37,20 @@ mongoose.connect('mongodb+srv://przemek:1234@cluster0-pwyj2.mongodb.net/test?ret
 const port = process.env.PORT || 3001;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
 
+//function getting scores from API
+const express = require('express');
+var unirest = require("unirest");
+var req = unirest("GET", "https://api-football-v1.p.rapidapi.com/v2/fixtures/league/524");
+let app = express();req.headers({
+    "x-rapidapi-host": "api-football-v1.p.rapidapi.com",
+    "x-rapidapi-key": "34824b206fmshd563d8344f18b7ap14bb98jsna29db806970c"
+});req.end(function (res) {    const awayTeam = res.body.api.fixtures[0].awayTeam.team_name;
+    const awayTeamScore = res.body.api.fixtures[0].goalsAwayTeam;
+    const homeTeam = res.body.api.fixtures[0].homeTeam.team_name;
+    const homeTeamScore = res.body.api.fixtures[0].goalsHomeTeam;
+    console.log(`${awayTeam} ${awayTeamScore} : ${homeTeamScore} ${homeTeam}`);
+});
+
 //Paulina - function getting scores and points when button clicked
 // 1. Input values and press 'Submit my bet' button
 // 2. Then press 'Check stats' button
