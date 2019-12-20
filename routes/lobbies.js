@@ -121,17 +121,15 @@ router.post('/:lobbyName/:leagueName/:date', async (req, res) => {
 		let info = JSON.parse(body);
 		let count = info.api.results;
 		for (let i = 0; i < count; i++) {
-			let homeTeamNameVar = info.api.fixtures[i].homeTeam.team_name;
-			let awayTeamNameVar = info.api.fixtures[i].awayTeam.team_name;
-			let scoreVar = info.api.fixtures[i].score.fulltime;
-			let dateVar = info.api.fixtures[i].event_date;
-			let statusVar = info.api.fixtures[i].status;
+			let fixtureApi=info.api.fixtures[i];
+			console.log(fixtureApi);
 			let fixture = new Fixture({
-				homeTeamName: homeTeamNameVar,
-				awayTeamName: awayTeamNameVar,
-				score: scoreVar,
-				date: dateVar,
-				status: statusVar
+				fixture_id: fixtureApi.fixture_id,
+				homeTeamName: fixtureApi.homeTeam.team_name,
+				awayTeamName: fixtureApi.awayTeam.team_name,
+				score: fixtureApi.score.fulltime,
+				date: fixtureApi.event_date,
+				status: fixtureApi.status
 			});
 			fixtureArray.push(fixture);
 		}
@@ -145,6 +143,46 @@ router.post('/:lobbyName/:leagueName/:date', async (req, res) => {
 			});
 	})
 });
+
+router.put('/:lobbyName/:fixtureID', async (req, res) => {
+
+
+	let lobby = await Lobby.find({
+		name: req.params.lobbyName
+	});
+	lobby = lobby[0];
+	let indeks=lobby.fixtures.indexOf(req.param.fixtureID);
+	
+	var options = {
+		method: 'GET',
+		url: `https://api-football-v1.p.rapidapi.com/v2/fixtures/id/${req.params.fixtureID}`,
+		headers: {
+			'x-rapidapi-host': 'api-football-v1.p.rapidapi.com',
+			'x-rapidapi-key': API_KEY
+		}
+	};
+
+	let fixtureArray = [];
+	request(options, function (error, response, body) {
+		if (error)
+			throw new Error(error);
+		let info = JSON.parse(body);
+		let fixture=info.api.fixtures[0];
+
+		
+
+		lobby.fixtures[indeks].date = fixture.score.fulltime;
+		lobby.fixtures[indeks].status = fixture.status;
+		lobby.save()
+			.then(data => {
+				res.send(data);
+			})
+			.catch(err => {
+				res.send(err);
+			});
+	})
+});
+
 
 
 
