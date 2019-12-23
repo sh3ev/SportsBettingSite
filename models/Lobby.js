@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const {fixtureSchema} = require('./fixture');
 
 const LobbySchema = new mongoose.Schema({
 	name: {
@@ -13,12 +12,7 @@ const LobbySchema = new mongoose.Schema({
 	users: {
 		type: [mongoose.Schema.Types.ObjectId],
         ref: 'User'
-	},
-	fixtures: {
-		type: [fixtureSchema],
-		default: []
 	}
-	
 });
 
 module.exports = mongoose.model('Lobby', LobbySchema);

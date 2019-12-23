@@ -6,6 +6,7 @@ const users = require('./routes/users');
 const matches = require('./modules/matches');
 const leauges = require('./routes/leagues');
 const lobbies = require('./routes/lobbies');
+const fixtures = require('./routes/fixtures');
 const app = express();
 
 
@@ -18,7 +19,9 @@ app.use('/api/lobbies', lobbies);
 app.get('/', (req, res) => {
 	res.send('homepage');
 });
+
 app.use('/api/leagues', leauges);
+app.use('/api/fixtures', fixtures);
 
 
 

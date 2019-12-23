@@ -1,20 +1,23 @@
 const mongoose = require('mongoose');
+const {
+  betSchema
+} = require('./bet');
 
 
 
 const usersBetSchema = new mongoose.Schema({
-    lobbyID: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Lobby'
-    },
-    fixtureID:String,
-    homeTeamScore: Number,
-    awayTeamScore: Number
-    
-    });
+
+  lobby: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Lobby'
+  },
+  bets: [betSchema],
+  score: Number
+
+});
 
 
 const UsersBet = mongoose.model('UsersBet', usersBetSchema);
 
-exports.UsersBet=UsersBet;
-exports.usersBetSchema=usersBetSchema;
+exports.UsersBet = UsersBet;
+exports.usersBetSchema = usersBetSchema;
