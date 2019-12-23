@@ -1,37 +1,34 @@
-const MongoClient = require('mongodb');
-const Joi = require('joi');
-const mongoose = require('mongoose');
-const express = require('express');
-const users = require('./routes/users');
-const matches = require('./modules/matches');
-const leauges = require('./routes/leagues');
-const lobbies = require('./routes/lobbies');
-const fixtures = require('./routes/fixtures');
+const MongoClient = require("mongodb");
+const Joi = require("joi");
+const mongoose = require("mongoose");
+const express = require("express");
+const users = require("./routes/users");
+const leauges = require("./routes/leagues");
+const lobbies = require("./routes/lobbies");
+const fixtures = require("./routes/fixtures");
 const app = express();
 
-
-app.use(express.urlencoded({
-	extended: true
-}));
+app.use(
+	express.urlencoded({
+		extended: true
+	})
+);
 app.use(express.json());
-app.use('/api/users', users);
-app.use('/api/lobbies', lobbies);
-app.get('/', (req, res) => {
-	res.send('homepage');
-});
-
-app.use('/api/leagues', leauges);
-app.use('/api/fixtures', fixtures);
-
-
+app.use("/api/users", users);
+app.use("/api/lobbies", lobbies);
+app.use("/api/leagues", leauges);
+app.use("/api/fixtures", fixtures);
 
 // DB CONNECTION
-mongoose.connect('mongodb+srv://przemek:1234@cluster0-pwyj2.mongodb.net/test?retryWrites=true&w=majority', {
-		useNewUrlParser: true,
-		useUnifiedTopology: true
-	})
-	.then(() => console.log('Connected to MongoDB...'))
-	.catch(err => console.error('Could not connect to MongoDB...'));
+mongoose
+	.connect(
+		"mongodb+srv://przemek:1234@cluster0-pwyj2.mongodb.net/test?retryWrites=true&w=majority", {
+			useNewUrlParser: true,
+			useUnifiedTopology: true
+		}
+	)
+	.then(() => console.log("Connected to MongoDB..."))
+	.catch(err => console.error("Could not connect to MongoDB..."));
 
 // START LISTETING TO THE SERVER
 const port = process.env.PORT || 3001;
@@ -47,7 +44,6 @@ app.listen(port, () => console.log(`Listening on port ${port}...`));
 // let userPoints = [];
 // let awayTeamScore;
 // let homeTeamScore;
-
 
 // const aTeamScore = document.getElementById('team-a');
 // const hTeamScore = document.getElementById('team-b');
@@ -71,8 +67,6 @@ app.listen(port, () => console.log(`Listening on port ${port}...`));
 
 //     });
 
-
-
 // checkStats.addEventListener('click', () => {
 //     fetch("https://api-football-v1.p.rapidapi.com/v2/fixtures/league/524/2019-12-01", {
 //     "method": "GET",
@@ -89,7 +83,6 @@ app.listen(port, () => console.log(`Listening on port ${port}...`));
 //         homeTeamScore = data.api.fixtures[1].goalsHomeTeam;
 //         awayTeamScore = data.api.fixtures[1].goalsAwayTeam;
 
-
 //         teams.innerHTML = (`${awayTeam} ${awayTeamScore} : ${homeTeamScore} ${homeTeam}`);
 
 //         function compare() {
@@ -101,10 +94,10 @@ app.listen(port, () => console.log(`Listening on port ${port}...`));
 //                 result = 'draw';
 //             }
 //         };
-    
+
 //         compare();
 //         console.log(result);
-        
+
 //     }).catch(err => {
 //         console.log(err);
 //     });
@@ -129,7 +122,6 @@ app.listen(port, () => console.log(`Listening on port ${port}...`));
 //     }
 
 // }
-
 
 // showPoints.addEventListener('click', () => {
 //     getPoints(result, userBet);

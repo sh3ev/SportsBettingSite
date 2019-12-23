@@ -12,7 +12,10 @@ const usersBetSchema = new mongoose.Schema({
     ref: 'Lobby'
   },
   bets: [betSchema],
-  score: Number
+  score: {
+    type: Number,
+    default: 0,
+  }
 
 });
 
