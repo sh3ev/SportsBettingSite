@@ -43,39 +43,49 @@ router.post('/', async (req, res) => {
 //Add bets to user
 router.put('/bets/:id', async (req, res) => {
 
-  const user = await User.findById(req.params.id);
-  const FixtureID = req.body.fixtureID;
+  const user = await User.findById(req.params.id); //znajdz uzytkownika w bazie
+  const FixtureID = req.body.fixtureID; // przypisanie wartosci z body
   const userNewBet = req.body.bet;
   const lobbyID = req.body.lobbyID;
 
 
-  const newBet = new Bet({
+  const newBet = new Bet({ // utworzenie nowego modelu Bet
     fixtureID: FixtureID,
     fixtureBet: userNewBet
   })
 
-  const previousBets = user.usersBets.find((elem) => {
+  const previousBets = user.usersBets.find((elem) => { // sprawdza, czy uzytkownik ma juz bety dla tego lobby
     return elem.lobby == lobbyID;
   })
-  if (!previousBets) {
+  if (!previousBets) { // jezeli nie, tworzy nowa tablice z betami, oraz model dla betow dla danego lobby
     const betsArray = [newBet];
     const newUserBet = new UsersBet({
       lobby: lobbyID,
       bets: betsArray,
     })
 
-    user.usersBets.push(newUserBet);
-    await user.save().
+    user.usersBets.push(newUserBet); //dodaje model dla betow do tablicy
+    await user.save(). // save i koniec
     then(data =>
         res.send(data))
       .catch(err =>
         res.send(err));
-  } else {
-    const prevoiusIndex = user.usersBets.findIndex(elem => {
+  } else { // jezeli ma bety dla tego lobby,
+    const lobbyIndex = user.usersBets.findIndex(elem => {
       return elem.lobby == lobbyID;
-    })
+    }) //wyszukuje indeks danego lobby w tablicy
 
-    user.usersBets[prevoiusIndex].bets.push(newBet);
+
+    const fixtureIndex = user.usersBets[lobbyIndex].bets.findIndex(elem => { // sprawdz, czy jest juz bet dla tego meczu
+      return elem.fixtureID == FixtureID;
+    })
+    if (fixtureIndex != -1) // jesli jest, update
+      user.usersBets[lobbyIndex].bets[fixtureIndex] = newBet;
+    else //jesli nie, dodaj nowy bet
+      user.usersBets[lobbyIndex].bets.push(newBet); // dodaje nowy bet i save
+
+
+
     await user.save().
     then(data =>
         res.send(data))

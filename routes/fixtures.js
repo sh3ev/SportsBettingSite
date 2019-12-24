@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
 
     let fixture = await Fixture.find({
         league_name: req.body.league,
-        date: date
+        date: new RegExp(date)
     });
     if (fixture.length != 0)
         return res.send(fixture);
@@ -43,7 +43,7 @@ router.get('/', async (req, res) => {
         let info = JSON.parse(body);
         let count = info.api.results;
         if (count == 0)
-            return res.status(200).send("Brak spotkań na wybrany dzień");
+            return res.status(200).send("There are no matches for entered day!");
 
 
 
@@ -74,13 +74,21 @@ router.put('/:fixtureID', async (req, res) => {
 
     let fixture = await Fixture.findOne({
         fixture_id: req.params.fixtureID
+    }).select({
+        homeTeamName: 1,
+        awayTeamName: 1,
+        score: 1,
+        status: 1
     });
+    if (fixture.status == "Match Finished") {
+        return res.status(200).send("Match finished. No need to update.")
+    }
 
     let dateNow = new Date();
     let dateFixture = new Date(fixture.date)
 
     if (dateFixture > dateNow)
-        return res.status(200).send('Spotkanie się jeszcze nie odbyło!');
+        return res.status(200).send('Match has not ended!');
 
     var options = {
         method: 'GET',
@@ -99,8 +107,8 @@ router.put('/:fixtureID', async (req, res) => {
         let fixtureAPI = info.api.fixtures[0];
 
         fixture.set({
-            score: fixtureApi.score.fulltime,
-            status: fixtureApi.status
+            score: fixtureAPI.score.fulltime,
+            status: fixtureAPI.status
         });
 
 
