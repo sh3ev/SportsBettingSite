@@ -5,7 +5,7 @@ const { User } = require('../models/user');
 const express = require('express');
 const router = express.Router();
  
-router.post('/', async (req, res) => {
+router.post('/login', async (req, res) => {
     // pierwsza walidacja
     const { error } = validate(req.body);
     if (error) {
@@ -13,7 +13,7 @@ router.post('/', async (req, res) => {
     }
  
     //  szukanie usera po emailu
-    let user = await User.findOne({ email: req.body.email });
+    const user = await User.findOne({ email: req.body.email });
     if (!user) {
         return res.status(400).send('Nieprawidłowy email lub hasło.');
     }
@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
         return res.status(400).send('Nieprawidłowy email lub hasło.');
     }
  
-    res.send(true);
+    res.send("Logged in !");
 });
  
 function validate(req) {

@@ -6,6 +6,7 @@ const users = require("./routes/users");
 const leauges = require("./routes/leagues");
 const lobbies = require("./routes/lobbies");
 const fixtures = require("./routes/fixtures");
+const authRoute = require("./routes/auth");
 const app = express();
 var cors = require('cors')
 
@@ -16,6 +17,7 @@ app.use(
 	})
 );
 app.use(express.json());
+app.use("/api/user", authRoute);
 app.use("/api/users", users);
 app.use("/api/lobbies", lobbies);
 app.use("/api/leagues", leauges);

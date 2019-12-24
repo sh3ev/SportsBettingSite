@@ -99,8 +99,19 @@ Body Schema:
     "password" : " " // Minimum 5 characters
 }
 ```
+## 8. Login User
+```
+POST api/users/login
+```
+Body Schema:
+```
+{
+    "email" : "email",
+    "password" : " "
+}
+```
 
-## 8. Add bet to user in specific lobby
+## 9. Add bet to user in specific lobby
 
 ```
 PUT api/users/bets/:userID
@@ -115,7 +126,7 @@ Body Schema:
 ```
 **It will either add or update bet for indicated lobby.**
 
-## 9. List all fixtures for entered league and date.
+## 10. List all fixtures for entered league and date.
 ```
 GET api/fixtures/
 ```
@@ -148,7 +159,7 @@ or
 
 
 
-## 10. Update specific fixture for results
+## 11. Update specific fixture for results
 ```
 PUT api/fixtures/:fixtureID
 ```
