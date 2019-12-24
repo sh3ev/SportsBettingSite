@@ -7,7 +7,9 @@ const leauges = require("./routes/leagues");
 const lobbies = require("./routes/lobbies");
 const fixtures = require("./routes/fixtures");
 const app = express();
+var cors = require('cors')
 
+app.use(cors())
 app.use(
 	express.urlencoded({
 		extended: true
