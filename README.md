@@ -9,6 +9,7 @@ npm install
 Create in root folder a file: variables.js and write:
 ```
 exports.API_KEY="YOUR_KEY_TO_FOOTBALL_API"
+exports.TOKEN_SECRET = "YOUR_SECRET_TEXT"
 ```
 # Start Project
 ```

@@ -4,6 +4,8 @@ const _ = require('lodash');
 const { User } = require('../models/user');
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
+const { TOKEN_SECRET } = require('../variables.js');
  
 router.post('/login', async (req, res) => {
     // pierwsza walidacja
@@ -24,6 +26,10 @@ router.post('/login', async (req, res) => {
         return res.status(400).send('Nieprawidłowy email lub hasło.');
     }
  
+    // Create and assign a token
+    const token = jwt.sign({_id: user.id}, TOKEN_SECRET);
+    res.header('auth-token', token).send(token);
+
     res.send("Logged in !");
 });
  
