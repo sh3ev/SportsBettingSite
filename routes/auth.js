@@ -4,8 +4,10 @@ const _ = require('lodash');
 const { User } = require('../models/user');
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
+const { TOKEN_SECRET } = require('../variables.js');
  
-router.post('/', async (req, res) => {
+router.post('/login', async (req, res) => {
     // pierwsza walidacja
     const { error } = validate(req.body);
     if (error) {
@@ -13,7 +15,7 @@ router.post('/', async (req, res) => {
     }
  
     //  szukanie usera po emailu
-    let user = await User.findOne({ email: req.body.email });
+    const user = await User.findOne({ email: req.body.email });
     if (!user) {
         return res.status(400).send('Nieprawidłowy email lub hasło.');
     }
@@ -24,7 +26,11 @@ router.post('/', async (req, res) => {
         return res.status(400).send('Nieprawidłowy email lub hasło.');
     }
  
-    res.send(true);
+    // Create and assign a token
+    const token = jwt.sign({_id: user.id}, TOKEN_SECRET);
+    res.header('auth-token', token).send(token);
+
+    res.send("Logged in !");
 });
  
 function validate(req) {

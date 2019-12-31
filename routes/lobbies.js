@@ -2,21 +2,15 @@ const express = require("express");
 const router = express.Router();
 const Lobby = require("../models/Lobby");
 const League = require("../models/league");
-const {
-	Fixture
-} = require("../models/fixture");
+const {	Fixture } = require("../models/fixture");
 const request = require("request");
 const mongoose = require("mongoose");
-const {
-	API_KEY
-} = require("../variables.js");
-
-const {
-	User
-} = require("../models/user");
+const {	API_KEY } = require("../variables.js");
+const {	User } = require("../models/user");
+const verify = require("./verifyToken");
 
 //LIST ALL LOBBIES
-router.get("/", async (req, res) => {
+router.get("/", verify, async (req, res) => {
 	const lobbies = await Lobby.find();
 	res.send(lobbies);
 });
