@@ -9,6 +9,7 @@ const fixtures = require("./routes/fixtures");
 const authRoute = require("./routes/auth");
 const app = express();
 var cors = require('cors')
+require('./routes/prod')(app);
 
 app.use(cors())
 app.use(
