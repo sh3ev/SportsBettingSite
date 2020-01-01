@@ -12,10 +12,14 @@ const {
 const {
   UsersBet
 } = require('../models/usersBet');
+const verify = require("../middleware/verifyToken");
 
 
+router.get('/me', verify, async (req, res) => {
+  const user = await User.findById(req.user._id).select('-password');
+  res.send(user);
 
-
+})
 router.post('/', async (req, res) => {
   // pierwsza walidacja
   const {
@@ -41,9 +45,9 @@ router.post('/', async (req, res) => {
   }
 });
 //Add bets to user
-router.put('/bets/:id', async (req, res) => {
+router.put('/bets/', verify, async (req, res) => {
 
-  const user = await User.findById(req.params.id); //znajdz uzytkownika w bazie
+  const user = await User.findById(req.user._id); //znajdz uzytkownika w bazie
   const FixtureID = req.body.fixtureID; // przypisanie wartosci z body
   const userNewBet = req.body.bet;
   const lobbyID = req.body.lobbyID;

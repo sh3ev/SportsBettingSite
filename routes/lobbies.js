@@ -20,9 +20,10 @@ router.get("/", verify, async (req, res) => {
 });
 
 //SUBMITS LOBBY
-router.post("/", (req, res) => {
+router.post("/", verify, (req, res) => {
 	const lobby = new Lobby({
-		name: req.body.name
+		name: req.body.name,
+		users: [req.user._id]
 	});
 	lobby
 		.save()
@@ -36,7 +37,7 @@ router.post("/", (req, res) => {
 
 
 //DELETE LOBBY
-router.delete("/:lobbyId", async (req, res) => {
+router.delete("/:lobbyId", verify, async (req, res) => {
 	const removedLobby = await Lobby.remove({
 		_id: req.params.lobbyId
 	});
@@ -46,8 +47,8 @@ router.delete("/:lobbyId", async (req, res) => {
 
 //Add user to Lobby
 
-router.put("/:lobbyID/add", async (req, res) => {
-	const updatedLobby = await Lobby.findById(req.params.lobbyID);
+router.put("/:lobbyID/add", verify, async (req, res) => {
+	const updatedLobby = await Lobby.find(req.params.lobbyID);
 
 	updatedLobby.users.push(req.body.userID);
 
@@ -62,7 +63,7 @@ router.put("/:lobbyID/add", async (req, res) => {
 });
 
 //List users who belongs to lobby
-router.get("/:lobbyID/users", async (req, res) => {
+router.get("/:lobbyID/users", verify, async (req, res) => {
 	const lobby = await Lobby.findById(req.params.lobbyID);
 	if (!lobby) return res.status(404).send('Lobby does not exist!');
 
@@ -88,7 +89,7 @@ router.get("/:lobbyID/users", async (req, res) => {
 });
 
 // Checking users bets
-router.get("/:lobbyID/:fixtureID/check", async (req, res) => {
+router.get("/:lobbyID/:fixtureID/check", verify, async (req, res) => {
 
 	const lobby = await Lobby.findById(req.params.lobbyID); // Znalezienie lobby
 	const usersCount = lobby.users.length; // liczba użytkowników lobby
