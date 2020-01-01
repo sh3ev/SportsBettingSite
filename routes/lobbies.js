@@ -48,7 +48,7 @@ router.delete("/:lobbyId", verify, async (req, res) => {
 //Add user to Lobby
 
 router.put("/:lobbyID/add", verify, async (req, res) => {
-	const updatedLobby = await Lobby.find(req.params.lobbyID);
+	const updatedLobby = await Lobby.findById(req.params.lobbyID);
 
 	updatedLobby.users.push(req.body.userID);
 
