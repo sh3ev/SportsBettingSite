@@ -1,3 +1,4 @@
+const config = require('config');
 const MongoClient = require("mongodb");
 const Joi = require("joi");
 const mongoose = require("mongoose");
@@ -10,6 +11,15 @@ const authRoute = require("./routes/auth");
 const app = express();
 var cors = require('cors')
 require('./routes/prod')(app);
+
+if (!config.get('jwtPrivateKey')) {
+	console.error('FATAL ERROR: jwtPrivateKey is not defined');
+	process.exit(1)
+} else if (!config.get('ApiKey')) {
+	console.error('FATAL ERROR: Api Key is not defined');
+	process.exit(1)
+}
+
 
 app.use(cors())
 app.use(

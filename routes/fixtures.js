@@ -1,8 +1,7 @@
 const request = require('request');
 const mongoose = require('mongoose');
-const {
-    API_KEY
-} = require('../variables.js');
+const config = require("config")
+const API_KEY = config.get('ApiKey');
 const {
     Fixture
 } = require('../models/fixture');
