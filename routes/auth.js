@@ -8,6 +8,8 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const config = require('config');
+
+
 router.post('/login', async (req, res) => {
     // pierwsza walidacja
     const {
@@ -35,7 +37,7 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign({
         _id: user._id
     }, config.get('jwtPrivateKey'));
-    res.header('auth-token', token).send(token);
+    res.header('x-auth-token', token);
 
     res.send("Logged in !");
 });

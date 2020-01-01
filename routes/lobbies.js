@@ -10,7 +10,7 @@ const mongoose = require("mongoose");
 const {
 	User
 } = require("../models/user");
-const verify = require("./verifyToken");
+const verify = require("../middleware/verifyToken");
 const config = require("config")
 const API_KEY = config.get('ApiKey');
 //LIST ALL LOBBIES
