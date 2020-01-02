@@ -19,8 +19,10 @@ if (!config.get('jwtPrivateKey')) {
   console.error('FATAL ERROR: Api Key is not defined');
   process.exit(1);
 }
-
-app.use(cors({ 'Access-Control-Expose-Headers': 'X-Content-Range' }));
+var corsOptions = {
+  'Access-Control-Expose-Headers': ['Access - Token', 'Uid']
+};
+app.use(cors(corsOptions));
 app.use(
   express.urlencoded({
     extended: true
