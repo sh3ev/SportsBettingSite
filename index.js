@@ -20,7 +20,7 @@ if (!config.get('jwtPrivateKey')) {
   process.exit(1);
 }
 const corsOptions = {
-  exposedHeaders: 'Authorization,Content-Range,X-Content-Range'
+  exposedHeaders: 'X-Auth-Token'
 };
 
 app.use(cors(corsOptions));
