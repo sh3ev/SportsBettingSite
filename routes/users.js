@@ -13,6 +13,7 @@ const {
   UsersBet
 } = require('../models/usersBet');
 const verify = require("../middleware/verifyToken");
+const Lobby = require("../models/Lobby");
 
 
 router.get('/me', verify, async (req, res) => {
@@ -51,7 +52,7 @@ router.put('/bets/', verify, async (req, res) => {
   const FixtureID = req.body.fixtureID; // przypisanie wartosci z body
   const userNewBet = req.body.bet;
   const lobbyID = req.body.lobbyID;
-
+  const lobbyName = await Lobby.findById(lobbyID).name;
 
   const newBet = new Bet({ // utworzenie nowego modelu Bet
     fixtureID: FixtureID,
@@ -65,12 +66,13 @@ router.put('/bets/', verify, async (req, res) => {
     const betsArray = [newBet];
     const newUserBet = new UsersBet({
       lobby: lobbyID,
+      lobbyName: lobbyName,
       bets: betsArray,
     })
 
     user.usersBets.push(newUserBet); //dodaje model dla betow do tablicy
     await user.save(). // save i koniec
-    then(data =>
+      then(data =>
         res.send(data))
       .catch(err =>
         res.send(err));
@@ -91,7 +93,7 @@ router.put('/bets/', verify, async (req, res) => {
 
 
     await user.save().
-    then(data =>
+      then(data =>
         res.send(data))
       .catch(err =>
         res.send(err));

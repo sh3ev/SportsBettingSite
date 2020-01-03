@@ -11,6 +11,7 @@ const usersBetSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Lobby'
   },
+  lobbyName: String,
   bets: [betSchema],
   score: {
     type: Number,
