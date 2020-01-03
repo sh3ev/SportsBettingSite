@@ -52,8 +52,8 @@ router.put('/bets/', verify, async (req, res) => {
   const FixtureID = req.body.fixtureID; // przypisanie wartosci z body
   const userNewBet = req.body.bet;
   const lobbyID = req.body.lobbyID;
-  const lobbyName = await Lobby.findById(lobbyID).name;
-
+  let lobbyName = await Lobby.findById(lobbyID);
+  lobbyName = lobbyName.name;
   const newBet = new Bet({ // utworzenie nowego modelu Bet
     fixtureID: FixtureID,
     fixtureBet: userNewBet
