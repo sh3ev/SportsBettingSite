@@ -68,6 +68,25 @@ router.get('/', async (req, res) => {
 
 
 })
+router.get('/:fixtureID', async (req, res) => {
+
+    let fixture = await Fixture.findOne({
+        fixture_id: req.params.fixtureID
+    }).select({
+        homeTeamName: 1,
+        awayTeamName: 1,
+        score: 1,
+        status: 1
+    });
+
+    if (!fixture) {
+        res.status(404).send("There is no fixture in database with typed ID")
+    }
+
+    res.status(200).send(fixture);
+
+}
+)
 
 router.put('/:fixtureID', async (req, res) => {
 
