@@ -20,10 +20,12 @@ router.get("/", verify, async (req, res) => {
 });
 
 //SUBMITS LOBBY
-router.post("/", verify, (req, res) => {
+router.post("/", verify, async (req, res) => {
+	const user = await User.findById(req.user._id)
+
 	const lobby = new Lobby({
 		name: req.body.name,
-		users: [req.user._id]
+		users: [{ userID: req.user._id, userName: user.name }]
 	});
 	lobby
 		.save()
@@ -52,12 +54,12 @@ router.put("/:lobbyID/add", verify, async (req, res) => {
 	const user = await User.findOne({ email: req.body.email });
 
 	const check = updatedLobby.users.find(elem => {
-		return elem == user._id
+		return elem.userID == user._id
 	})
 	if (check)
-		res.status(400).send("User belongs to lobby!")
+		return res.status(400).send("User belongs to lobby!")
 	else {
-		updatedLobby.users.push(user._id);
+		updatedLobby.users.push({ userID: user._id, userName: user.name });
 		updatedLobby
 			.save()
 			.then(data => {

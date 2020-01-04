@@ -9,10 +9,14 @@ const LobbySchema = new mongoose.Schema({
 		type: Date,
 		default: Date.now
 	},
-	users: {
-		type: [mongoose.Schema.Types.ObjectId],
-        ref: 'User'
-	}
+
+	users: [{
+		userID: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'User'
+		}, userName: String
+	}]
+
 });
 
 module.exports = mongoose.model('Lobby', LobbySchema);
