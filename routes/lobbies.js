@@ -52,7 +52,7 @@ router.put("/:lobbyID/add", verify, async (req, res) => {
 	const user = await User.findOne({ email: req.body.email });
 
 	const check = updatedLobby.users.find(elem => {
-		return elem._id == user._id
+		return elem == user._id
 	})
 	if (check)
 		res.status(400).send("User belongs to lobby!")
