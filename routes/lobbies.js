@@ -52,9 +52,8 @@ router.delete("/:lobbyId", verify, async (req, res) => {
 router.put("/:lobbyID/add", verify, async (req, res) => {
 	const updatedLobby = await Lobby.findById(req.params.lobbyID);
 	const user = await User.findOne({ email: req.body.email });
-
 	const check = updatedLobby.users.find(elem => {
-		return elem.userID == user._id
+		return user._id.toString() === elem.userID.toString();
 	})
 	if (check)
 		return res.status(400).send("User belongs to lobby!")
