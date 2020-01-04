@@ -51,16 +51,22 @@ router.put("/:lobbyID/add", verify, async (req, res) => {
 	const updatedLobby = await Lobby.findById(req.params.lobbyID);
 	const user = await User.findOne({ email: req.body.email });
 
-	updatedLobby.users.push(user._id);
-
-	updatedLobby
-		.save()
-		.then(data => {
-			res.send(data);
-		})
-		.catch(err => {
-			res.send(err);
-		});
+	const check = updatedLobby.users.find(elem => {
+		return elem._id == user._id
+	})
+	if (check)
+		res.status(400).send("User belongs to lobby!")
+	else {
+		updatedLobby.users.push(user._id);
+		updatedLobby
+			.save()
+			.then(data => {
+				res.send(data);
+			})
+			.catch(err => {
+				res.send(err);
+			});
+	}
 });
 
 //List users who belongs to lobby
@@ -99,7 +105,7 @@ router.get("/:lobbyID/:fixtureID/check", verify, async (req, res) => {
 		fixture_id: req.params.fixtureID
 	}); // znalezienie meczu w bazie
 
-	if (fixtureData.status == "Not Started") {
+	if (fixtureData.status != "Match Finished") {
 		return res.status(200).send("Match has not started yet!") // jezeli mecz sie jeszcze nie odbył, zwroc info
 	}
 
