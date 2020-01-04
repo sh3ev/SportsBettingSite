@@ -49,8 +49,9 @@ router.delete("/:lobbyId", verify, async (req, res) => {
 
 router.put("/:lobbyID/add", verify, async (req, res) => {
 	const updatedLobby = await Lobby.findById(req.params.lobbyID);
+	const user = await User.findOne({ email: req.body.email });
 
-	updatedLobby.users.push(req.body.userID);
+	updatedLobby.users.push(user._id);
 
 	updatedLobby
 		.save()
@@ -78,6 +79,7 @@ router.get("/:lobbyID/users", verify, async (req, res) => {
 		const oneUser = await User
 			.findById(lobby.users[i])
 			.select({
+				_id: 1,
 				name: 1,
 				email: 1
 			});

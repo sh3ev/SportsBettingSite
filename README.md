@@ -70,7 +70,7 @@ PUT /api/lobbies/:lobbyID/add
 Body Schema:
 
 ```
-{"userID": "id_of_user"}
+{"email": "email_of_user"}
 ```
 
 ## 5. List users who belongs to lobby
@@ -225,5 +225,44 @@ or
         "awayTeamName": "...",
         "score": "..."
     }
+
+```
+## 12. Get fixture details
+
+```
+GET api/fixtures/:fixtureID
+```
+
+Expected response:
+
+```
+"There is no fixture in database with typed ID"
+
+or
+
+    {
+       "homeTeamName": "...",
+        "awayTeamName": "...",
+        "score": "...",
+        "status": "..."
+    }
+
+```
+
+## 13. Get current user details (logged)
+
+```
+GET api/users/me
+```
+
+Expected response:
+
+```
+
+   {
+    "email" : "email",
+    "password" : " ",
+    "usersBets" : [...]
+   }
 
 ```
