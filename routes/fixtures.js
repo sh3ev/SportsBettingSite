@@ -10,7 +10,7 @@ const router = express.Router();
 const League = require('../models/league');
 
 
-router.get('/', async (req, res) => {
+router.post('/', async (req, res) => {
 
     const league = await League.find({
         name: req.body.league
