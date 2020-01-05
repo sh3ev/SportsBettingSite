@@ -170,7 +170,7 @@ Body Schema:
 ## 10. List all fixtures for entered league and date.
 
 ```
-GET api/fixtures/
+POST api/fixtures/
 ```
 
 Body Schema:
