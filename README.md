@@ -1,5 +1,10 @@
 # SportsBettingSite
 
+# Deployment
+https://damp-stream-51136.herokuapp.com/
+
+# Localy:
+
 # Installation
 
 ```
